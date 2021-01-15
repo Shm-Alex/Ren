@@ -5,4 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Dto\Dto.csproj" />
+    <ProjectReference Include="..\IRepository\IRepository.csproj" />
+    <ProjectReference Include="..\Repository\Repository.csproj" />
+    <ProjectReference Include="..\SimpleSerializer\SimpleSerializer.csproj" />
+    <ProjectReference Include="..\WriterImplementation\WriterImplementation.csproj" />
+  </ItemGroup>
+
 </Project>
