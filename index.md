@@ -1,37 +1,75 @@
-## Welcome to GitHub Pages
 
-You can use the [editor on GitHub](https://github.com/Shm-Alex/Ren/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+# Рефакторинг кода предложенного на  собесе 
+Предожили отрефакторить следующий код:
+```csharp
+public interface IMyClass1Saver
+{
+  void SaveAsXmlToFile(FileWriter fileWriter);
+  void SaveAsXmlToDatabase(DatabaseWriter databaseWriter);
+  void SaveAsJsonToFile(FileWriter fileWriter);
+  void SaveAsJsonToDatabase(DatabaseWriter databaseWriter);
+}
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+public class MyClass1 : IMyClass1Saver
+{
+	public string FNameRus;
+  public string LNameRus;
+  public string MNameRus;
+  public string FNameEng;
+  public string LNameEng;
+  public string MNameEng;
+  public string PassportNumber1;
+  public string PassportNumber2;
+  
+  public string GetFullName(int language)
+  {
+  	if (language == 0)
+    	return $"{LNameRus} {FNameRus} {MNameRus}";
+    else if (language == 1)
+    	return $"{LNameEng} {FNameEng} {MNameEng}";
+    else
+    	return null;
+  }
+  
+  public void SaveAsXmlToFile(FileWriter fileWriter)
+  {
+  	XmlSerializer xmlSerializer = new XmlSerializer(this.GetType());
+    var stringWriter = new StringWriter();
+    XmlWriter xmlWriter = XmlWriter.Create(stringWriter);
+    xmlSerializer.Serialize(xmlWriter, this);
+    var xml = stringWriter.ToString();
+    
+    fileWriter.Write(xml);
+    
+    stringWriter.Dispose();
+    xmlWriter.Dispose();
+  }
+  
+  public void SaveAsXmlToDatabase(DatabaseWriter databaseWriter)
+  {
+  	XmlSerializer xmlSerializer = new XmlSerializer(this.GetType());
+    var stringWriter = new StringWriter();
+    XmlWriter xmlWriter = XmlWriter.Create(stringWriter);
+    xmlSerializer.Serialize(xmlWriter, this);
+    var xml = stringWriter.ToString();
+    
+    databaseWriter.Write(xml);
+    
+    stringWriter.Dispose();
+    xmlWriter.Dispose();
+  }
+  
+  public void SaveAsJsonToFile(FileWriter fileWriter)
+  {
+  	throw new NotSupportedException();
+  }
+  
+  public void SaveAsJsonToDatabase(DatabaseWriter databaseWriter)
+  {
+  	throw new NotSupportedException();
+  }
+}
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
 ```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Shm-Alex/Ren/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
